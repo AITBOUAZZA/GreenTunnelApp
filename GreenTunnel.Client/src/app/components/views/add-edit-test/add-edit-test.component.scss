@@ -1,0 +1,47 @@
+.gray-button {
+  background-color: gray !important; 
+  color: blue !important; 
+}
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.mat-spinner {
+  position: absolute;
+  top: 0;
+  right: 5px; /* Adjust the right distance as needed */
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+/* CSS to style the "OK" icon */
+.valid-icon {
+color: green; /* Set the color to green */
+font-size: 24px; /* Adjust the font size as needed */
+position: absolute;
+right: 10px; /* Adjust the right position as needed */
+top: calc(50% - 12px); /* Vertically center the icon */
+}
+.invalid-icon {
+color: red; /* Set the color to red or any color you prefer for validation failure */
+font-size: 24px; /* Adjust the font size as needed */
+position: absolute;
+right: 10px; /* Adjust the right position as needed */
+top: calc(50% - 12px); /* Vertically center the icon */
+}
+
+/* CSS to decrease the space between error message and input box */
+::ng-deep mat-error {
+position: relative !important;
+top: -9px !important; /* Adjust this value as needed */
+}
+

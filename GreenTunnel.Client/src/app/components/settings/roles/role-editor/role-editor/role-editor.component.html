@@ -1,0 +1,97 @@
+<mat-card class="mb-25 tagus-card p-0">
+  <mat-card-content>
+    <div class="create-dialog-box scrollable-dialog">
+      <form *ngIf="formResetToggle" name="roleEditorForm" #f="ngForm" novalidate
+        (ngSubmit)="f.form.valid ? save() :
+              (!roleName.valid && showErrorAlert('Role name is required', 'Please enter a role name (minimum of 2 and maximum of 200 characters)'));">
+        <div class="row mb-5">
+          <div class="col-lg-6 col-md-6">
+            <div class="form-group">
+              <label [class.col-lg-3]="isViewOnly" [class.col-lg-2]="!isViewOnly" class="d-block fw-semibold"
+                for="roleName">{{'roles.editor.Name' | translate}}</label>
+              <input [disabled]="!canManageRoles" type="text" id="roleName" name="roleName"
+                placeholder="Enter role name" class="input-control"
+                [ngClass]="{'is-valid':  roleName.valid, 'is-invalid' :  !roleName.valid}" [(ngModel)]="roleEdit.name"
+                #roleName="ngModel" required minlength="2" maxlength="200" />
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6">
+            <div class="form-group">
+              <label [class.col-lg-3]="isViewOnly" [class.col-lg-2]="!isViewOnly" class="d-block fw-semibold"
+                for="roleDescription">{{'roles.editor.Description' |
+                translate}}</label>
+              <input [disabled]="!canManageRoles" type="text" id="roleDescription" name="roleDescription"
+                placeholder="Enter role description" class="input-control"
+                [ngClass]="{'is-valid':  roleName.valid, 'is-invalid' :  !roleName.valid}"
+                [(ngModel)]="roleEdit.description" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 mb-5">
+              <span *ngIf="showValidationErrors && roleName?.touched && !roleName.valid" class="invalid-feedback">
+                {{'roles.editor.RoleNameRequired' | translate}}
+              </span>
+            </div>
+          </div>
+          <!--******************************************************************************************************-->
+          <div class="row">
+            <div class="col-sm-12 mat-card card-body bg-light well-sm permissionsRow mx-0 mb-5">
+              <div class="row">
+
+                <ng-template ngFor let-permissionGroup [ngForOf]="allPermissions | groupBy: 'groupName'" let-i="index">
+                  <div class="row col-sm-6 permissionsColumn">
+                    <label class="col-md-5 col-form-label group-name" for="checkboxes" (click)="toggleGroup(permissionGroup.key)">{{permissionGroup.key}}</label>
+                    <div class="col-md-7">
+                      <div class="form-check" *ngFor="let permission of permissionGroup.value">
+                        <input [disabled]="!canManageRoles" name="checkboxes-{{permission.value}}"
+                          id="checkboxes-{{permission.value}}" type="checkbox" class="form-check-input"
+                          [(ngModel)]="selectedValues[permission.value]">
+                        <label class="d-block fw-semibold" ngbTooltip="permission.description"
+                          for="checkboxes-{{permission.value}}">{{permission.name}}</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="(i + 1) % 2 === 0" class="clearfix"></div>
+                </ng-template>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="row">
+          <div class="col-5">
+            <div *ngIf="canManageRoles" class="float-start">
+              <a (click)="selectAll()" href="javascript:;" class="btn btn-link text-link">{{'roles.editor.SelectAll' |
+                translate}}</a>|<a (click)="selectNone()" href="javascript:;"
+                class="btn btn-link text-link">{{'roles.editor.SelectNone' | translate}}</a>
+            </div>
+          </div>
+
+          <div class="col-7">
+            <div class="text-end">
+              <button *ngIf="!canManageRoles" type="button" class="gray button-spacing" (click)="cancel()"><i
+                  class="ri-close-fill"></i> {{'roles.editor.Close' | translate}}</button>
+              <button *ngIf="canManageRoles" type="button" (click)="cancel()" class="btn btn-danger button-spacing"
+                [disabled]="isSaving"><i class='fa fa-times'></i> {{'roles.editor.Cancel' | translate}}</button>
+              <!-- <button *ngIf="canManageRoles" type="submit" class="btn btn-primary" [disabled]="isSaving">
+                  <i *ngIf="!isSaving" class='ri-edit-fill'></i><i *ngIf="isSaving" class='fa fa-circle-o-notch fa-spin button-spacing'></i>  {{isSaving ? ('roles.editor.Saving' | translate) : ('roles.editor.Save' | translate)}}
+                </button> -->
+              <button *ngIf="canManageRoles" mat-flat-button class="tagus" (click)="save()" [disabled]="isSaving">
+                <i *ngIf="!isSaving" class='ri-edit-fill px-2'></i>
+                <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-1" role="status"
+                  aria-hidden="true"></span>
+                <span *ngIf="isSaving; else saveText">{{('roles.editor.Saving' | translate)}}</span>
+                <ng-template #saveText>{{('roles.editor.Save' | translate)}}</ng-template>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\GreenTunnel.Core\GreenTunnel.Core.csproj" />
+		<ProjectReference Include="..\GreenTunnel.Infrastructure\GreenTunnel.Infrastructure.csproj" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
+		<PackageReference Include="MediatR" Version="12.1.1" />
+		<PackageReference Include="FluentValidation" Version="11.7.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Avion\Commands\" />
+	</ItemGroup>
+
+</Project>

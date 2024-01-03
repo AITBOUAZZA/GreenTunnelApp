@@ -1,0 +1,39 @@
+<header class="pageHeader">
+  <h3><i class="fa fa-cog fa-lg page-caption" aria-hidden="true"></i> {{'pageHeader.Settings' | translate}}</h3>
+</header>
+<div [@fadeInOut]>
+  <div class="d-sm-flex flex-row mb-2">
+  
+    <div class="tab-content w-100">
+      <div class="tab-pane show active" id="profile" role="tabpanel">
+        <h4>{{'settings.header.UserProfile' | translate}}</h4>
+        <hr class="hr-separator" />
+        <div [@fadeInOut] *ngIf="isProfileActivated" class="content-container ps-lg-2">
+          <app-user-info></app-user-info>
+        </div>
+
+      </div>
+      <div class="tab-pane" id="preferences" role="tabpanel">
+        <h4>{{'settings.header.UserPreferences' | translate}}</h4>
+        <hr class="hr-separator" />
+        <div [@fadeInOut] *ngIf="isPreferencesActivated" class="content-container ps-lg-2">
+          <app-user-preferences></app-user-preferences>
+        </div>
+      </div>
+      <div class="tab-pane" id="users" role="tabpanel">
+        <h4>{{'settings.header.UsersManagements' | translate}}</h4>
+        <hr class="hr-separator" />
+        <div [@fadeInOut] *ngIf="canViewUsers && isUsersActivated" class="content-container ps-lg-1">
+          <app-users-management></app-users-management>
+        </div>
+      </div>
+      <div class="tab-pane" id="roles" role="tabpanel">
+        <h4>{{'settings.header.RolesManagement' | translate}}</h4>
+        <hr class="hr-separator" />
+        <div [@fadeInOut] *ngIf="canViewRoles && isRolesActivated" class="content-container ps-lg-1">
+          <app-roles-management></app-roles-management>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

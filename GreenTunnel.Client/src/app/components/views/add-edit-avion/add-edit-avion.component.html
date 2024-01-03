@@ -1,0 +1,93 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-space-between">
+    <h5 class="mb-0">Avion</h5>
+    <ol class="breadcrumb mb-0 ps-0">
+        <li class="breadcrumb-item">
+            <a routerLink="/">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+
+        <li class="breadcrumb-item fw-semibold">Avion</li>
+    </ol>
+</div>
+<mat-card class="mb-25 tagus-card">
+    <mat-card-content>
+
+        <mat-card-header class="d-block">
+            <div class="row control-box justify-content-between">
+                <div class="col-lg-5">
+                    <div class="search-box">
+                        <app-search-box (searchChange)="onSearchChanged($event)"
+                                        placeholder="{{'search for Avion' | translate}}"></app-search-box>
+                    </div>
+                </div>
+                <div class="col-lg-7 text-end">
+                    <button *ngIf="canManageUsers" mat-flat-button class="default-btn tagus" (click)="newAvion()">
+                        <i class="ri-add-fill"></i>{{'Add' | translate}}
+                    </button>
+                </div>
+            </div>
+        </mat-card-header>
+
+        <div class="myTasksTable mat-elevation-z8 tagus-mat-table">
+            <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="nomAvion">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'nomAvion' | translate }}</th>
+                    <td mat-cell *matCellDef="let element">
+                        <a class="text-primary cursor-pointer" [routerLink]="['/view-test']"
+                           [queryParams]="{ id: element.numAvion }">{{ element.nomAvion }}</a>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="capacite">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'capacite' | translate }}</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="badge completed fw-medium">{{element.capacite}}</span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Localisation">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'Localisation' | translate }}</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="badge completed fw-medium">{{element.Localisation}}</span>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button type="button" mat-button
+                                class="position-relative dot-btn p-0 bg-transparent border-none"
+                                [matMenuTriggerFor]="actionMenu">
+                            <i class="ri-more-fill"></i>
+                        </button>
+                        <mat-menu #actionMenu="matMenu" class="dotMenu two monthMenu" xPosition="before">
+
+                            <button mat-menu-item type="button" (click)="editPilote(element.id)"
+                                    class="bg-transparent border-none position-relative">
+                                <i class="ri-edit-line"></i> Edit
+                            </button>
+                            <button mat-menu-item type="button" (click)="deletePilote(element)"
+                                    class="bg-transparent border-none position-relative">
+                                <i class="ri-delete-bin-line"></i> Remove
+                            </button>
+
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+            <mat-progress-bar mode="indeterminate" *ngIf="loadingIndicator"></mat-progress-bar>
+
+            <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+                           [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

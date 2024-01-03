@@ -1,0 +1,17 @@
+
+<form class="search-box position-relative">
+  <input
+    #searchInput
+    type="text"
+    class="input-search d-block"
+    [placeholder]="placeholder"
+    (input)="onValueChange($event.target.value)"
+  >
+ 
+  <button type="button" (click)="clear()">
+    <i *ngIf="searchInput.value === ''" class="ri-search-line"></i>
+    <i *ngIf="searchInput.value !== ''" class="fa fa-times-circle"></i>
+  </button>
+</form>
+
+  

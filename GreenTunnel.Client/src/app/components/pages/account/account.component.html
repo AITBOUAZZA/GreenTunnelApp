@@ -1,0 +1,417 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-space-between">
+    <h5 class="mb-0">Profile</h5>
+    <ol class="breadcrumb mb-0 ps-0">
+        <li class="breadcrumb-item">
+            <a routerLink="/">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+    </ol>
+</div>
+<mat-card class="mb-25 tagus-card">
+
+    <mat-card-content>
+
+        <form *ngIf="formResetToggle" [attr.autocomplete]="isGeneralEditor ? 'NaN' : null" name="userInfoForm"
+            #f="ngForm" novalidate
+            (ngSubmit)="f.form.valid ? save() :
+
+          (!userName.valid && showErrorAlert('User name is required', 'Please enter a user name (minimum of 2 and maximum of 200 characters)'));
+
+          (userPassword && !userPassword.valid && showErrorAlert('Password is required', 'Please enter the current password'));
+
+          (email.errors?.required && email?.touched && showErrorAlert('Email is required', 'Please enter an email address (maximum of 200 characters)'));
+          (email.errors?.pattern && email?.touched && showErrorAlert('Invalid Email', 'Please enter a valid email address'));
+
+          (isChangePassword  && isEditingSelf && isChangePassword?.touched && !currentPassword.valid && showErrorAlert('Current password is required', 'Please enter the current password'));
+
+          ((isChangePassword || isNewUser) && newPassword?.touched  &&  !newPassword.valid && showErrorAlert('New password is required', 'Please enter the new password (minimum of 6 characters)'));
+
+          ((isChangePassword || isNewUser) && newPassword?.touched && newPassword.valid && confirmPassword.errors?.required && showErrorAlert('Confirmation password is required', 'Please enter the confirmation password'));
+          ((isChangePassword || isNewUser) && newPassword?.touched && newPassword.valid && confirmPassword.errors?.appValidateEqual && showErrorAlert('Passwword mismatch', 'New password and confirmation password do not match'));
+
+          (canAssignRoles && !roles.valid && showErrorAlert('Roles is required', 'Please select a minimum of 1 role'));">
+            <div class="row mt-20">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="tagus-form-group">
+                        <label [class.col-lg-3]="isViewOnly" [class.col-lg-2]="!isViewOnly"
+                            class="d-block mb-12 fw-semibold gray-color"
+                            for="jobTitle-{{uniqueId}}">{{'users.editor.JobTitle' | translate}}</label>
+                        <div *ngIf="!isEditMode" [class.col-lg-9]="isViewOnly" [class.col-lg-10]="!isViewOnly">
+                            <p class="form-control-plaintext">{{user.jobTitle}}</p>
+                        </div>
+                        <mat-form-field appearance="fill" *ngIf="isEditMode" [class.col-lg-9]="isViewOnly"
+                            [class.col-lg-10]="!isViewOnly">
+                            <i class="ri-user-3-line"></i>
+                            <input matInput value="Andrew" type="text" [(ngModel)]="userEdit.jobTitle"
+                                attr.id="jobTitle-{{uniqueId}}" name="jobTitle" placeholder="Enter Job Title">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="tagus-form-group">
+                        <label [class.col-lg-3]="isViewOnly" [class.col-lg-2]="!isViewOnly"
+                            class="d-block mb-12 fw-semibold gray-color" for="email-{{uniqueId}}">{{'users.editor.Email'
+                            | translate}}</label>
+                        <div *ngIf="!isEditMode" [class.col-lg-9]="isViewOnly" [class.col-lg-10]="!isViewOnly">
+                            <p class="form-control-plaintext">{{user.email}}</p>
+                        </div>
+                        <mat-form-field appearance="fill" *ngIf="isEditMode" [class.col-lg-9]="isViewOnly"
+                            [class.col-lg-10]="!isViewOnly">
+                            <i class="ri-mail-line"></i>
+                            <input matInput type="text" attr.id="email-{{uniqueId}}" name="email"
+                                placeholder="Enter email address"
+
+                                [(ngModel)]="userEdit.email" #email="ngModel" required maxlength="200"
+                                pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
+
+                        </mat-form-field>
+                        <span *ngIf="showValidationErrors  && email?.errors?.required" class="invalid-feedback d-block">
+                            {{'users.editor.EmailRequired' | translate}}
+                        </span>
+                        <span *ngIf="showValidationErrors  && email?.errors?.pattern" class="invalid-feedback d-block">
+                            {{'users.editor.InvalidEmail' | translate}}
+                        </span>
+                    </div>
+
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="tagus-form-group">
+                        <label [class.col-lg-3]="isViewOnly" [class.col-lg-2]="!isViewOnly"
+                            class="d-block mb-12 fw-semibold gray-color"
+                            for="userName-{{uniqueId}}">{{'users.editor.UserName' | translate}}</label>
+                        <div *ngIf="!isEditMode" [class.col-lg-9]="isViewOnly" [class.col-lg-10]="!isViewOnly">
+                            <p class="form-control-plaintext">{{user.userName}}</p>
+                        </div>
+                        <mat-form-field appearance="fill" *ngIf="isEditMode" [class.col-lg-9]="isViewOnly"
+                            [class.col-lg-10]="!isViewOnly">
+                            <i class="ri-user-3-line"></i>
+                            <input matInput type="text" attr.id="userName-{{uniqueId}}" name="userName"
+                                [attr.autocomplete]="isGeneralEditor ? 'new-password' : null"
+                                placeholder="Enter user name"
+                                [(ngModel)]="userEdit.userName" #userName="ngModel" required minlength="2"
+                                maxlength="200">
+                        </mat-form-field>
+                        <span *ngIf="showValidationErrors  && !userName?.valid" class="invalid-feedback d-block">
+                            {{'users.editor.UserNameRequired' | translate}}
+                        </span>
+                    </div>
+                </div>
+                <div *ngIf="isEditMode && isEditingSelf && !isChangePassword && user.userName != userEdit.userName"
+                    class="row">
+                    <div class="col-lg-12">
+                        <hr class="hr-password-separator" />
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="tagus-form-group">
+                        <div *ngIf="isEditMode" class="row">
+                            <label for="newPassword-{{uniqueId}}"
+                                class="d-block mb-12 fw-semibold gray-color">{{'users.editor.Password' |
+                                translate}}</label>
+                            <div *ngIf="!isChangePassword && !isNewUser" class="col-lg-10">
+                                <button type="button" (click)="changePassword()"
+                                    class="btn btn-link text-link">{{'users.editor.ChangePassword' |
+                                    translate}}</button>
+                            </div>
+
+                            <div *ngIf="isChangePassword || isNewUser" class="col-lg-10">
+                                <div class="password-well card card-body px-4">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="tagus-form-group">
+                                                <label class="d-block mb-12 fw-semibold gray-color"
+                                                    for="currentPassword-{{uniqueId}}">{{'users.editor.CurrentPassword'
+                                                    |
+                                                    translate}}</label>
+                                                <mat-form-field appearance="fill">
+                                                    <i class="ri-lock-line"></i>
+                                                    <mat-label>Type password</mat-label>
+                                                    <input matInput [type]="hide ? 'password' : 'text'"
+                                                        attr.id="currentPassword-{{uniqueId}}" name="currentPassword"
+                                                        [attr.autocomplete]="isGeneralEditor ? 'new-password' : null"
+                                                        placeholder="Enter current password"
+                                                        [(ngModel)]="userEdit.currentPassword"
+                                                        #currentPassword="ngModel" required>
+                                                    <button mat-icon-button matSuffix (click)="hide = !hide"
+                                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                                    </button>
+                                                </mat-form-field>
+                                            </div>
+                                            <span
+                                                *ngIf="showValidationErrors  && !currentPassword?.valid  && currentPassword?.touched"
+                                                class="invalid-feedback d-block">
+                                                {{'users.editor.CurrentPasswordRequired' | translate}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="tagus-form-group">
+                                                <label class="d-block mb-12 fw-semibold gray-color"
+                                                    for="newPassword-{{uniqueId}}">{{'users.editor.NewPassword' |
+                                                    translate}}</label>
+                                                <mat-form-field appearance="fill">
+                                                    <i class="ri-lock-line"></i>
+                                                    <mat-label>Type password</mat-label>
+                                                    <input matInput [type]="hidePass ? 'password' : 'text'"
+                                                        attr.id="newPassword-{{uniqueId}}" name="newPassword"
+                                                        [attr.autocomplete]="isGeneralEditor ? 'new-password' : null"
+                                                        placeholder="Enter new password"
+                                                        [(ngModel)]="userEdit.newPassword" #newPassword="ngModel"
+                                                        minlength="6" appValidateEqual="confirmPassword" reverse="true"
+                                                        required>
+                                                    <button mat-icon-button matSuffix (click)="hidePass = !hidePass"
+                                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass">
+                                                        <mat-icon>{{hidePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                                    </button>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="tagus-form-group">
+                                                <label class="d-block mb-12 fw-semibold gray-color"
+                                                    for="confirmPassword-{{uniqueId}}">{{'users.editor.ConfirmPassword'
+                                                    |
+                                                    translate}}</label>
+                                                <mat-form-field appearance="fill">
+                                                    <i class="ri-lock-line"></i>
+                                                    <mat-label>Type password</mat-label>
+                                                    <input matInput [type]="hideConfirmPass ? 'password' : 'text'"
+                                                        attr.id="confirmPassword-{{uniqueId}}" name="confirmPassword"
+                                                        [attr.autocomplete]="isGeneralEditor ? 'new-password' : null"
+                                                        placeholder="Confirm new password" class="form-control"
+                                                        [(ngModel)]="userEdit.confirmPassword"
+                                                        #confirmPassword="ngModel" required
+                                                        appValidateEqual="newPassword">
+                                                    <button mat-icon-button matSuffix (click)="hideConfirmPass = !hideConfirmPass"
+                                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPass">
+                                                        <mat-icon>{{hideConfirmPass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                                    </button>
+                                                </mat-form-field>
+                                                <span
+                                                    *ngIf="showValidationErrors && confirmPassword?.errors?.validateEqual && !confirmPassword?.errors?.required"
+                                                    class="invalid-feedback d-block">
+                                                    {{'users.editor.PasswordMismatch' | translate}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="!isEditMode || canAssignRoles">
+                    <div class="tagus-form-group">
+                        <label [class.col-lg-3]="isViewOnly" [class.col-lg-2]="!isViewOnly"
+                            class="d-block mb-12 fw-semibold gray-color" for="roles-user-info">{{'users.editor.Roles' |
+                            translate}}</label>
+                        <div *ngIf="!isEditMode" [class.col-lg-9]="isViewOnly" [class.col-lg-10]="!isViewOnly">
+                            <p ngPreserveWhitespaces class="form-control-plaintext">
+                                <span *ngFor="let role of user.roles">
+                                    <span title='{{getRoleByName(role)?.description}}'
+                                        class="badge rounded-pill bg-secondary">{{role}}</span>
+                                </span>
+                            </p>
+                        </div>
+
+                        <!-- <i class="ri-phone-line"></i>
+                            <input matInput value="+(555) 555-1234"> -->
+                        <div *ngIf="isEditMode && canAssignRoles"
+
+                            [class.col-lg-9]="isViewOnly" [class.col-lg-10]="!isViewOnly">
+
+
+                            <ng-select id="roles-user-info" name="roles" [items]="allRoles" bindLabel="name"
+                                bindValue="name" [multiple]="true" [closeOnSelect]="false" placeholder="Select Roles"
+                                [(ngModel)]="userEdit.roles" #roles="ngModel"
+                                class="tagus-form-group" required>
+                                <ng-template  ng-label-tmp let-item="item" let-clear="clear">
+                                    <span title='{{item.description}}'
+                                        class='badge gray rounded-pill' style="background: rgb(236,236,236);color: black;">{{item.name}}<span
+                                            class="ng-value-icon right" (click)="clear(item)"
+                                            aria-hidden="true">×</span></span>
+                                </ng-template>
+
+                                <ng-template ng-option-tmp let-item="item">
+                                    <span title='{{item.description}}'
+                                        class='badge rounded-pill' style="background: rgb(236,236,236);color: black;">{{item.name}}</span>
+                                    <i class="fa fa-check d-none"></i>
+                                </ng-template>
+                            </ng-select>
+
+                            <span *ngIf="showValidationErrors  && !roles?.valid" class="invalid-feedback d-block">
+                                {{'users.editor.RoleRequired' | translate}}
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="tagus-form-group">
+                        <label [class.col-lg-3]="isViewOnly" [class.col-lg-2]="!isViewOnly"
+                            class="d-block mb-12 fw-semibold gray-color"
+                            for="fullName-{{uniqueId}}">{{'users.editor.FullName' | translate}}</label>
+                        <div *ngIf="!isEditMode" [class.col-lg-9]="isViewOnly" [class.col-lg-10]="!isViewOnly">
+                            <p class="form-control-plaintext">{{user.fullName}}</p>
+                        </div>
+                        <mat-form-field appearance="fill" *ngIf="isEditMode" [class.col-lg-9]="isViewOnly"
+                            [class.col-lg-10]="!isViewOnly">
+                            <i class="ri-home-7-line"></i>
+                            <input matInput type="text" attr.id="fullName-{{uniqueId}}" name="fullName"
+                                placeholder="Enter full name" [(ngModel)]="userEdit.fullName">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="tagus-form-group">
+                        <label [class.col-lg-3]="isViewOnly" [class.col-lg-2]="!isViewOnly"
+                            class="d-block mb-12 fw-semibold gray-color"
+                            for="phoneNumber-{{uniqueId}}">{{'users.editor.PhoneNumber' | translate}}</label>
+                        <div *ngIf="!isEditMode" [class.col-lg-9]="isViewOnly" [class.col-lg-10]="!isViewOnly">
+                            <p class="form-control-plaintext">{{user.phoneNumber}}</p>
+                        </div>
+                        <mat-form-field appearance="fill" *ngIf="isEditMode" [class.col-lg-9]="isViewOnly"
+                            [class.col-lg-10]="!isViewOnly">
+                            <i class="ri-home-7-line"></i>
+                            <input matInput type="text" attr.id="phoneNumber-{{uniqueId}}" name="phoneNumber"
+                                placeholder="Enter phone number" [(ngModel)]="userEdit.phoneNumber">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="!isViewOnly">
+                    <div class="tagus-form-group">
+                        <label class="d-block mb-12 fw-semibold gray-color">{{'users.editor.Enabled' |
+                            translate}}</label>
+                        <div *ngIf="isGeneralEditor && isEditMode">
+                            <div class="form-check user-enabled">
+                            </div>
+                            <input matInput type="checkbox" id="idEnabled" name="isEnabled"
+                                [(ngModel)]="userEdit.isEnabled">
+                            <button *ngIf="userEdit.isLockedOut" type="button" (click)="unlockUser()"
+                                class="btn btn-warning unblock-user" [disabled]="isSaving"><i
+                                    class='fa fa-unlock-alt'></i> {{'users.editor.Unblock' | translate}}</button>
+                        </div>
+                    </div>
+                </div> -->
+                <div *ngIf="!isViewOnly" class="row">
+                    <div class="col-sm-5">
+                        <div class="tagus-form-group">
+                            <div *ngIf="isGeneralEditor && isEditMode" class="float-start">
+                                <div class="form-check user-enabled">
+                                    <input class="form-check-input" type="checkbox" id="idEnabled" name="isEnabled"
+                                        [(ngModel)]="userEdit.isEnabled">
+                                    <label for="idEnabled" class="form-check-label">{{'users.editor.Enabled' |
+                                        translate}}</label>
+                                </div>
+                                <button mat-raised-button *ngIf="userEdit.isLockedOut" type="button"
+                                    (click)="unlockUser()" class="btn btn-warning unblock-user" [disabled]="isSaving"><i
+                                        class='fa fa-unlock-alt'></i> {{'users.editor.Unblock' | translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- <h5 class="fw-semibold mb-8 mt-5">Your Photo</h5>
+            <p>This will be displayed on your profile.</p>
+            <div class="d-flex align-items-center">
+                <img src="assets/img/user/user15.jpg" class="rounded-circle" width="110" alt="user">
+                <div class="tagus-form-group ms-20">
+                    <label class="d-block mb-12 fw-semibold gray-color">Upload Image</label>
+                    <input type="file">
+                </div>
+            </div> -->
+
+            <button mat-raised-button *ngIf="!isEditMode && isGeneralEditor" type="button"
+                class="tagus fw-semibold button-spacing" (click)="close()"><i class="ri-close-fill"></i>
+                {{'users.editor.Close' | translate}}</button>
+            <!-- <button mat-raised-button *ngIf="!isEditMode && !isGeneralEditor" type="button"
+                class="tagus fw-semibold button-spacing" (click)="edit()"><i class="ri-edit-fill"></i>
+                {{'users.editor.Edit' | translate}}</button> -->
+            <!-- <button mat-raised-button *ngIf="isEditMode" type="button" (click)="cancel()"
+                class="tagus fw-semibold button-spacing" [disabled]="isSaving"><i class='fa fa-times'></i>
+                {{'users.editor.Cancel' | translate}}</button> -->
+            <!-- <button mat-raised-button *ngIf="isEditMode" type="submit" class="tagus fw-semibold button-spacing"
+                [disabled]="isSaving">
+                <i *ngIf="!isSaving" class='ri-edit-fill'></i><i *ngIf="isSaving"
+                    class='fa fa-circle-o-notch fa-spin'></i> {{isSaving ? ('users.editor.Saving' | translate) :
+                ('users.editor.Save' | translate)}}
+            </button> -->
+            <!-- <button mat-raised-button *ngIf="!isEditMode && !isGeneralEditor" type="submit"
+                class="tagus fw-semibold button-spacing"><i class="ri-add-fill"></i> Add New User</button>
+        </form> -->
+        <div>
+            <br/>
+            <h5 class="mb-0">More Settings</h5>
+            <br/>
+            <div class="row">
+            <div class="p-20 col-md-5">
+            <div class="row">
+                <div class="col-md-9">
+                    <span class="sub-title d-block mb-12 fw-semibold ">Dark Mode</span>
+                </div>
+                <div class="col-md-3">
+                    <button (click)="toggleTheme()" class="switch-btn " [class.active]="isDark()"></button>
+                </div>
+            </div>
+            </div>
+            <div class="p-20 col-md-5">
+                <div class="row">
+                    <div class="col-md-9">
+                <span class="sub-title d-block mb-12 fw-semibold">Only Sidebar Dark</span>
+            </div>
+            <div class="col-md-3">
+                <button (click)="toggleSidebarTheme()" class="switch-btn" [class.active]="isSidebarDark()"></button>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class="row">
+            <div class="p-20 col-md-5">
+                <div class="row">
+                    <div class="col-md-9">
+                <span class="sub-title d-block mb-12 fw-semibold">Only Header Dark</span>
+            </div>
+            <div class="col-md-3">
+                <button (click)="toggleHeaderTheme()" class="switch-btn" [class.active]="isHeaderDark()"></button>
+            </div>
+        </div>
+            </div>
+            <div class="p-20 col-md-5">
+                <div class="row">
+                    <div class="col-md-9">
+                <span class="sub-title d-block mb-12 fw-semibold">Borderd Card</span>
+            </div>
+            <div class="col-md-3">
+                <button (click)="toggleCardBorderTheme()" class="switch-btn" [class.active]="isCardBorder()"></button>
+            </div>
+        </div>
+    </div>
+            </div>
+        </div>
+        <!-- <button mat-raised-button *ngIf="!isEditMode && !isGeneralEditor" type="submit"
+                class="tagus fw-semibold button-spacing"> Update</button> -->
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div style="text-align: right;" class="mb-3 example-buttons">
+                    <button mat-raised-button *ngIf="isEditMode" type="submit" class="tagus fw-semibold button-spacing"
+                    [disabled]="isSaving">
+                    <i *ngIf="isSaving"
+                        class='fa fa-circle-o-notch fa-spin'></i> {{isSaving ? ('users.editor.Saving' | translate) :
+                    ('Update' | translate)}}
+                </button>
+
+                    </div>
+                    </div>
+                    </div>
+ </form>
+    </mat-card-content>
+</mat-card>

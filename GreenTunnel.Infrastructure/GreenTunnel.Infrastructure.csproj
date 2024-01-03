@@ -1,0 +1,88 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+
+
+	<ItemGroup>
+		<Compile Remove="Dtos\**" />
+		<Compile Remove="Repositories\Interfaces\**" />
+		<EmbeddedResource Remove="Dtos\**" />
+		<EmbeddedResource Remove="Repositories\Interfaces\**" />
+		<None Remove="Dtos\**" />
+		<None Remove="Repositories\Interfaces\**" />
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		<None Remove="Helpers\Templates\PlainTextTestEmail.template" />
+		<None Remove="Helpers\Templates\TestEmail.template" />
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		<Content Include="Helpers\Templates\PlainTextTestEmail.template">
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Include="Helpers\Templates\TestEmail.template">
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+
+
+
+		<PackageReference Include="Duende.IdentityServer" Version="6.3.2" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.3.2" />
+
+
+
+		<PackageReference Include="IdentityServer.ExtensionGrant.Delegation" Version="2.2.0" />
+
+
+
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+		<PackageReference Include="MailKit" Version="4.0.0" />
+		<PackageReference Include="MediatR" Version="12.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
+
+
+
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="7.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+
+
+		<PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="Syncfusion.Xamarin.DataSource" Version="22.2.12" />
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\GreenTunnel.Core\GreenTunnel.Core.csproj" />
+	</ItemGroup>
+
+
+
+</Project>

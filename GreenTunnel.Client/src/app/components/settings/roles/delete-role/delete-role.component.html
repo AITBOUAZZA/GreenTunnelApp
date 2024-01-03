@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <button type="button" class="btn-close fs-sm" title="Close" aria-label="Close" tabindex="-1"
+        (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body text-center">
+    <img src="assets/img/remove_icon.png" width="150px" alt="Image" class="mx-auto d-block my-5" />
+
+    <h1 class="delete-title">Delete</h1>
+    <p>Are you sure you want to delete?</p>
+    <div class="text-end">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div style="text-align: right;" class="mb-3 example-buttons">
+                    <button mat-flat-button class="cancel-btn" (click)="decline()">No</button>
+                    <span class="mx-2"></span>
+                    <button mat-flat-button color="warn" (click)="confirm()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

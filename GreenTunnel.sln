@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenTunnel.Application", "GreenTunnel.Application\GreenTunnel.Application.csproj", "{4CAD5A72-31CE-40CB-B398-2F44034BF60A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenTunnel.Core", "GreenTunnel.Core\GreenTunnel.Core.csproj", "{55EED43B-0E33-494D-BB1A-6F40D0178E40}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenTunnel.Infrastructure", "GreenTunnel.Infrastructure\GreenTunnel.Infrastructure.csproj", "{4F1964CC-25D2-4C30-9BA5-57B469016E54}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "GreenTunnel.Client", "GreenTunnel.Client\GreenTunnel.Client.esproj", "{CD00171D-38C5-4809-BDCA-5DBD28F8CB3F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenTunnel.Api", "GreenTunnel.Api\GreenTunnel.Api.csproj", "{68CD32EB-183A-4307-8BA9-D8AF704A5603}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4CAD5A72-31CE-40CB-B398-2F44034BF60A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CAD5A72-31CE-40CB-B398-2F44034BF60A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CAD5A72-31CE-40CB-B398-2F44034BF60A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CAD5A72-31CE-40CB-B398-2F44034BF60A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55EED43B-0E33-494D-BB1A-6F40D0178E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55EED43B-0E33-494D-BB1A-6F40D0178E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55EED43B-0E33-494D-BB1A-6F40D0178E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55EED43B-0E33-494D-BB1A-6F40D0178E40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F1964CC-25D2-4C30-9BA5-57B469016E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F1964CC-25D2-4C30-9BA5-57B469016E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F1964CC-25D2-4C30-9BA5-57B469016E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F1964CC-25D2-4C30-9BA5-57B469016E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD00171D-38C5-4809-BDCA-5DBD28F8CB3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD00171D-38C5-4809-BDCA-5DBD28F8CB3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD00171D-38C5-4809-BDCA-5DBD28F8CB3F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CD00171D-38C5-4809-BDCA-5DBD28F8CB3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD00171D-38C5-4809-BDCA-5DBD28F8CB3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD00171D-38C5-4809-BDCA-5DBD28F8CB3F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{68CD32EB-183A-4307-8BA9-D8AF704A5603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68CD32EB-183A-4307-8BA9-D8AF704A5603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68CD32EB-183A-4307-8BA9-D8AF704A5603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68CD32EB-183A-4307-8BA9-D8AF704A5603}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C89DF948-3346-4454-B00F-E7959717B863}
+	EndGlobalSection
+EndGlobal

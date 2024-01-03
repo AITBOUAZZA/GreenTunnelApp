@@ -1,0 +1,135 @@
+.row:not(:last-child) {
+    /*border-bottom: 1px solid #ccc;*/
+  }
+   
+  @mixin hr-dashed($margin: 10px 5px ) {
+    margin: $margin;
+    border-top: 1px dashed currentColor;
+    background-color: inherit;
+  }
+  
+  .info-separator {
+    @include hr-dashed(0 5px);
+  }
+  
+  .edit-separator {
+    @include hr-dashed;
+  }
+  
+  .hr-password-separator {
+    margin: 4px;
+    border-style: none;
+    height: 0;
+  }
+  
+  .last-separator {
+    margin-top: 5px;
+  }
+  
+  .last-edit-separator {
+    margin-top: 15px;
+  }
+  
+  input.form-control {
+    border-left-width: 5px;
+  }
+  
+  .invalid-feedback {
+    display: block;
+  }
+  
+  .password-well {
+    padding: 0.5rem;
+  }
+  
+  .hint-sm {
+    display: block;
+  }
+  
+  .form-check.user-enabled {
+    display: inline-block;
+  }
+  
+  .unblock-user {
+    margin-left: 34px;
+  }
+  
+  .send-confirm-email {
+    padding: 0;
+    vertical-align: inherit;
+    font-size: 80%;
+  }
+  
+  
+  @media (min-width: 992px) {
+    .user-enabled {
+      margin-left: 40px;
+    }
+  }
+  .button-spacing {
+    margin-right: 10px; /* Adjust the value as needed */
+  }
+
+  /* Custom styles to mimic Angular Material mat-select */
+.custom-select {
+  display: inline-block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  position: relative;
+}
+
+.custom-select:focus-within {
+  border-color: #1976D2; /* Focus border color */
+}
+
+.custom-select .ng-value-container {
+  padding: 0 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.custom-select .ng-value-container .ng-value {
+  background-color: #e0e0e0;
+  color: #333;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 2px 8px;
+}
+
+.custom-select .ng-placeholder {
+  color: #999;
+}
+
+.custom-select .ng-value-icon {
+  color: #333;
+  cursor: pointer;
+}
+
+.custom-select .ng-dropdown-panel {
+  border: none;
+  box-shadow: none;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.custom-select .ng-dropdown-panel .ng-option {
+  padding: 8px 16px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.custom-select .ng-dropdown-panel .ng-option:hover {
+  background-color: #f0f0f0;
+}
+
+/* Error state styles (modify as needed) */
+.custom-select.ng-invalid {
+  border-color: #f44336;
+}

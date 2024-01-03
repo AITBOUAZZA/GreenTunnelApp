@@ -1,0 +1,26 @@
+.mat-table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.mat-table th, .mat-table td {
+    border-bottom: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Style pour les en-têtes de colonnes */
+.mat-header-cell {
+    font-weight: bold;
+    background-color: #f5f5f5;
+}
+
+/* Style pour les lignes de données */
+.mat-row:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.mat-row:hover {
+    background-color: #e0e0e0;
+}
